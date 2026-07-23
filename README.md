@@ -1,7 +1,8 @@
-<h1 align="center">
-  Hi, I'm
-  <img src="https://readme-typing-svg.demolab.com?font=Audiowide&size=32&pause=1000&color=FFFFFF&center=true&vCenter=true&width=250&height=45&lines=Solarisx" alt="Typing SVG" style="vertical-align: middle;" />
-</h1>
+<div align="center">
+  <a href="https://git.io/typing-svg">
+    <img src="https://readme-typing-svg.demolab.com?font=Audiowide&size=32&pause=1000&color=FFFFFF&center=true&vCenter=true&width=600&lines=Hi%2C+I'm+Solarisx" alt="Typing SVG" />
+  </a>
+</div>
 
 ###
 
