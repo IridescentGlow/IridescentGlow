@@ -49,7 +49,7 @@
 
 <div align="center">
   <img src="https://streak-stats.demolab.com?user=IridescentGlow&locale=en&mode=daily&theme=dracula&hide_border=false&border_radius=5&order=3" height="150" alt="streak graph"  />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=IridescentGlow&layout=compact&theme=dracula&hide_border=false" height="150" alt="languages graph"  />
+  <img src="https://github-readme-stats-fast.vercel.app/api/top-langs/?username=IridescentGlow&layout=compact&theme=dracula&hide_border=false" height="150" alt="languages graph"  />
 </div>
 
 ###
