@@ -1,107 +1,41 @@
 # Hey, I'm IridescentGlow 👋
 
-> Arch Linux enthusiast • Offensive Security Student • Electrical Engineering Student • Open Source Enjoyer
+> Video Editor • Linux Enthusiast • Electrical Engineering Student
+
+I enjoy building clean editing workflows, customizing Linux, and learning new technologies.
 
 ---
 
-## 👨‍💻 About Me
+### 🎬 Focus
 
-- 🔐 Learning Offensive Security, Pentesting & Red Teaming
-- 🎯 Currently solving VulnHub machines and building a home hacking lab
-- 🐧 Daily driving Arch Linux + Hyprland
-- ⚡ Electrical Engineering student
-- 🐳 Learning Docker, virtualization and Linux infrastructure
-- 🌱 Always trying to automate and optimize my workflow
-- ❤️ Open-source software enthusiast
-
----
-
-## 🛠 Tech Stack
-
-### Operating Systems
-
-![Arch Linux](https://img.shields.io/badge/Arch%20Linux-1793D1?style=for-the-badge&logo=arch-linux&logoColor=white)
-
-### Linux
-
-![Hyprland](https://img.shields.io/badge/Hyprland-58E1FF?style=for-the-badge)
-![Wayland](https://img.shields.io/badge/Wayland-000000?style=for-the-badge)
-![Bash](https://img.shields.io/badge/Bash-121011?style=for-the-badge&logo=gnu-bash)
-![Zsh](https://img.shields.io/badge/Zsh-F15A24?style=for-the-badge)
-
-### Security
-
-![Metasploit](https://img.shields.io/badge/Metasploit-2596CD?style=for-the-badge)
-![Nmap](https://img.shields.io/badge/Nmap-00457C?style=for-the-badge)
-![Burp Suite](https://img.shields.io/badge/Burp_Suite-FF6633?style=for-the-badge)
-![Wireshark](https://img.shields.io/badge/Wireshark-1679A7?style=for-the-badge&logo=wireshark)
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker)
-
-### Languages
-
-![C++](https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=cplusplus)
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![HTML5](https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5)
-![CSS3](https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3)
-
----
-
-# 🚀 Featured Projects
-
-### 🖥 Hyprland Dotfiles
-
-A heavily customized Arch Linux + Hyprland desktop setup focused on productivity, aesthetics and automation.
-
-⭐ Repository:
-https://github.com/IridescentGlow/hyprland-dotfiles
-
----
-
-### 🔓 Kioptrix Level 1 Walkthrough
-
-Complete writeup of exploiting the classic Kioptrix Level 1 VulnHub machine.
-
-⭐ Repository:
-https://github.com/IridescentGlow/kioptrix-level-1
-
----
-
-## 📚 Currently Learning
-
-- Linux Internals
-- Active Directory
-- Privilege Escalation
-- Web Application Security
-- Networking
+- Video Editing
+- Motion Graphics
+- Linux Customization
+- Open Source
 - Docker
-- Red Team Methodology
-- Bash Scripting
-- Python for Security
-- Malware Analysis
+- Offensive Security (Learning)
 
 ---
 
-## 📈 GitHub Stats
+### 🛠 Tools
 
-![Stats](https://github-readme-stats.vercel.app/api?username=IridescentGlow&show_icons=true&theme=radical)
+![Premiere Pro](https://img.shields.io/badge/Premiere_Pro-9999FF?style=flat-square&logo=adobepremierepro)
+![After Effects](https://img.shields.io/badge/After_Effects-9999FF?style=flat-square&logo=adobeaftereffects)
+![DaVinci Resolve](https://img.shields.io/badge/DaVinci_Resolve-233A51?style=flat-square)
 
-![Streak](https://streak-stats.demolab.com?user=IridescentGlow&theme=radical)
-
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=IridescentGlow&layout=compact&theme=radical)
-
----
-
-## 🎯 2026 Goals
-
-- Complete multiple VulnHub machines
-- Finish Hack The Box Starting Point
-- Build a professional home pentesting lab
-- Learn Active Directory attacks
-- Publish more security writeups
-- Contribute to open source
-- Improve Python for automation
+![Arch Linux](https://img.shields.io/badge/Arch-1793D1?style=flat-square&logo=arch-linux)
+![Hyprland](https://img.shields.io/badge/Hyprland-58E1FF?style=flat-square)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker)
 
 ---
 
-> "Stay curious. Break things. Learn how they work. Build them back stronger."
+### Featured
+
+🎨 Hyprland Dotfiles  
+🔐 Kioptrix Level 1 Writeup
+
+---
+
+![Stats](https://github-readme-stats.vercel.app/api?username=IridescentGlow&show_icons=true&hide_border=true&theme=transparent)
+
+![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=IridescentGlow&layout=compact&hide_border=true&theme=transparent)
