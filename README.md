@@ -8,7 +8,6 @@
 
 ### 🔭 Currently
 - Learning offensive security, working through VulnHub boxes
-- 📝 Latest writeup: [kioptrix-level-1](https://github.com/IridescentGlow/kioptrix-level-1)
 
 
 
