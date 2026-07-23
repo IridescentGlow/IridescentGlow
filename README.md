@@ -64,9 +64,9 @@
 
 ###
 
-<div align="center">
+<!-- <div align="center">
   <img src="https://github-profile-trophy-winning.vercel.app/?username=IridescentGlow&theme=dracula&no-frame=false&no-bg=false&margin-w=8&margin-h=8" alt="trophy graph" />
-</div>
+</div> -->
 
 ###
 
