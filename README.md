@@ -49,13 +49,13 @@
 
 <div align="center">
   <img src="https://streak-stats.demolab.com?user=IridescentGlow&locale=en&mode=daily&theme=dracula&hide_border=false&border_radius=5&order=3" height="150" alt="streak graph"  />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=IridescentGlow&layout=compact&theme=dracula&hide_border=false" height="150" alt="languages graph"  />
+  <img src="https://github-readme-stats-fast.vercel.app/api/top-langs/?username=IridescentGlow&layout=compact&theme=dracula&hide_border=false" height="150" alt="languages graph"  />
 </div>
 
 ###
 
 <div align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=IridescentGlow&theme=dracula&no-frame=false&no-bg=false&margin-w=8&margin-h=8" alt="trophy graph" />
+  <img src="https://github-profile-trophy-winning.vercel.app/?username=IridescentGlow&theme=dracula&no-frame=false&no-bg=false&margin-w=8&margin-h=8" alt="trophy graph" />
 </div>
 
 ###
@@ -63,5 +63,13 @@
 <div align="center">
   <img src="https://github-readme-activity-graph.vercel.app/graph?username=IridescentGlow&theme=dracula&radius=16&area=true" alt="activity-graph graph" />
 </div>
+
+###
+
+<picture align="center">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/IridescentGlow/IridescentGlow/output/pacman-contribution-graph-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/IridescentGlow/IridescentGlow/output/pacman-contribution-graph.svg">
+  <img alt="pacman contribution graph" src="https://raw.githubusercontent.com/IridescentGlow/IridescentGlow/output/pacman-contribution-graph.svg">
+</picture>
 
 ###
