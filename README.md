@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://git.io/typing-svg">
-    <img src="https://readme-typing-svg.demolab.com?font=Audiowide&size=53&pause=1000&color=FFFFFF&center=true&vCenter=true&width=600&lines=Hi%2C+I'm+Solarisx" alt="Typing SVG" />
+    <img src="https://readme-typing-svg.demolab.com?font=Audiowide&size=53&duration=80&pause=4000&color=FFFFFF&background=FF5E5B&center=true&vCenter=true&width=600&lines=Hi%2C+I'm+Solarisx" alt="Typing SVG" />
   </a>
 </div>
 
@@ -98,6 +98,6 @@
 
 <div align="center">
   <a href="https://ko-fi.com/yourname">
-    <img src="https://readme-typing-svg.demolab.com?font=Pacifico&size=32&pause=1000&color=FFFFFF&center=true&vCenter=true&width=400&height=60&lines=%E2%98%95+Buy+me+a+coffee!" alt="Buy me a coffee" />
+    <img src="https://readme-typing-svg.demolab.com?font=Pacifico&size=32&duration=80&pause=4000&color=FFFFFF&background=FF5E5B&center=true&vCenter=true&width=400&height=60&lines=%E2%98%95+Buy+me+a+coffee!" alt="Buy me a coffee" />
   </a>
 </div>
