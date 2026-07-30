@@ -4,17 +4,16 @@
   </a>
 </div>
 
-<br>
+
 ###
-<br>
+
 
 ### 🔭 Currently
 - Learning offensive security, working through VulnHub boxes
 
 
-<br>
 ###
-<br>
+
 
 
 <div align="center">
@@ -49,9 +48,9 @@
   <img src="https://skillicons.dev/icons?i=vite" height="40" alt="vite logo"  />
 </div>
 
-<br>
+
 ###
-<br>
+
 
 <div data-importer="socials" align="center">
   <a href="https://www.linkedin.com/in/edible-dank-84932233b/" target="_blank"><img src="https://img.shields.io/static/v1?message=LinkedIn&logo=linkedin&label=&color=0077B5&logoColor=white&labelColor=&style=for-the-badge" height="25" alt="linkedin logo"  /></a>
@@ -62,9 +61,9 @@
   <a href="https://discord.com/users/1529829388353409064" target="_blank"><img src="https://img.shields.io/static/v1?message=Discord&logo=discord&label=&color=7289DA&logoColor=white&labelColor=&style=for-the-badge" height="25" alt="discord logo"  /></a>
 </div>
 
-<br>
+
 ###
-<br>
+
 
 <div align="center">
  <img src="./profile/streak.svg" alt="GitHub Streak" height="150" />
@@ -77,17 +76,17 @@
   <img src="https://github-profile-trophy-winning.vercel.app/?username=IridescentGlow&theme=dracula&no-frame=false&no-bg=false&margin-w=8&margin-h=8" alt="trophy graph" />
 </div> -->
 
-<br>
+
 ###
-<br>
+
 
 <div align="center">
   <img src="https://github-readme-activity-graph.vercel.app/graph?username=IridescentGlow&theme=dracula&radius=16&area=true" alt="activity-graph graph" />
 </div>
 
-<br>
+
 ###
-<br>
+
 
 <picture align="center">
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/IridescentGlow/IridescentGlow/output/pacman-contribution-graph-dark.svg">
@@ -95,9 +94,9 @@
   <img alt="pacman contribution graph" src="https://raw.githubusercontent.com/IridescentGlow/IridescentGlow/output/pacman-contribution-graph.svg">
 </picture>
 
-<br>
+
 ###
-<br>
+
 
 <div align="center">
   <p>⭐ <b>Featured</b></p>
