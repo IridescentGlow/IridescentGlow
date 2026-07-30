@@ -1,8 +1,7 @@
 <br/>
 
 <div align="center">
-  <span style="font-family: monospace; font-size: 32px; color: #FFFFFF; vertical-align: middle;">Hi, I'm </span>
-  <img src="https://typingsvg.vercel.app/api/svg?lines=%5B%7B%22text%22%3A%22Solarisx%22%2C%22font%22%3A%22Audiowide%22%2C%22color%22%3A%22%23FFFFFF%22%2C%22fontSize%22%3A53%7D%5D&backgroundOpacity=0&cursorStyle=straight&deletionBehavior=stay&pause=4000&typingSpeed=0.04&deleteSpeed=0.04&width=250&height=70&border=false" alt="Solarisx" style="vertical-align: middle;" />
+  <span style="font-family: monospace; font-size: 40px; color: #FFFFFF; vertical-align: middle; display: inline-block;">Hi, I'm&nbsp;</span><img src="https://typingsvg.vercel.app/api/svg?lines=%5B%7B%22text%22%3A%22Solarisx%22%2C%22font%22%3A%22Audiowide%22%2C%22color%22%3A%22%23FFFFFF%22%2C%22fontSize%22%3A53%7D%5D&backgroundOpacity=0&cursorStyle=straight&deletionBehavior=stay&pause=4000&typingSpeed=0.04&deleteSpeed=0.04&width=250&height=70&border=false" alt="Solarisx" style="vertical-align: middle; display: inline-block;" />
 </div>
 
 ###
