@@ -7,6 +7,8 @@
 
 ###
 
+<br/>
+
 
 ### 🔭 Currently
 - Learning offensive security, working through VulnHub boxes
@@ -50,8 +52,6 @@
 
 
 ###
-
-<br/>
 
 
 <div data-importer="socials" align="center">
