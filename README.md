@@ -2,7 +2,7 @@
 
 <div align="center">
   <a href="https://github.com/bay007/TypingSVG">
-    <img src="https://typingsvg.vercel.app/api/svg?lines=%5B%7B%22text%22%3A%22Hi%2C%20I%27m%20Solarisx%22%2C%22font%22%3A%22Audiowide%22%2C%22color%22%3A%22%23FFFFFF%22%2C%22fontSize%22%3A53%7D%5D&backgroundOpacity=0&cursorStyle=straight&deletionBehavior=stay&pause=4000&typingSpeed=0.04&deleteSpeed=0.04&width=600&height=70&border=false" alt="Typing SVG" />
+    <img src="https://typingsvg.vercel.app/api/svg?lines=%5B%7B%22text%22%3A%22Hi%2C%20I%27m%20Solarisx%22%2C%22font%22%3A%22Audiowide%22%2C%22color%22%3A%22%23FFFFFF%22%2C%22fontSize%22%3A53%7D%5D&backgroundOpacity=0&cursorStyle=straight&deletionBehavior=stay&pause=4000&typingSpeed=0.02&deleteSpeed=0.04&width=600&height=70&border=false" alt="Typing SVG" />
   </a>
 </div>
 
