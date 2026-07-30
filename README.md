@@ -1,3 +1,5 @@
+<br/>
+
 <div align="center">
   <a href="https://git.io/typing-svg">
     <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=900&size=55&duration=80&pause=4000&color=FFFFFF&center=true&vCenter=true&width=700&lines=Hi%2C+I'm+Solarisx" alt="Typing SVG" />
