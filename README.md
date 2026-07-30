@@ -91,6 +91,10 @@
   <a href="https://github.com/IridescentGlow/hyprland-dotfiles">
     <img src="https://github-readme-stats-fast.vercel.app/api/pin/?username=IridescentGlow&repo=hyprland-dotfiles&theme=dracula" alt="Featured Repo" />
   </a>
+  <a href="https://github.com/ellay21/Medihelp-Frontend">
+    <img src="https://github-readme-stats-fast.vercel.app/api/pin/?username=ellay21&repo=Medihelp-Frontend&theme=dracula" alt="Medihelp Frontend" />
+  </a>
 </div>
 
 ![Isometric Contributions](https://github-contributor-stats.vercel.app/api?username=IridescentGlow&limit=5&theme=dark)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/yourname)
