@@ -1,18 +1,20 @@
 <div align="center">
   <a href="https://git.io/typing-svg">
-    <img src="https://readme-typing-svg.demolab.com?font=Audiowide&size=53&duration=80&pause=4000&color=FFFFFF&background=FF5E5B&center=true&vCenter=true&width=600&lines=Hi%2C+I'm+Solarisx" alt="Typing SVG" />
+    <img src="https://readme-typing-svg.demolab.com?font=Audiowide&size=53&duration=80&pause=4000&color=FFFFFF&center=true&vCenter=true&width=600&lines=Hi%2C+I'm+Solarisx" alt="Typing SVG" />
   </a>
 </div>
 
+<br>
 ###
+<br>
 
 ### 🔭 Currently
 - Learning offensive security, working through VulnHub boxes
 
 
-
+<br>
 ###
-
+<br>
 
 
 <div align="center">
@@ -47,7 +49,9 @@
   <img src="https://skillicons.dev/icons?i=vite" height="40" alt="vite logo"  />
 </div>
 
+<br>
 ###
+<br>
 
 <div data-importer="socials" align="center">
   <a href="https://www.linkedin.com/in/edible-dank-84932233b/" target="_blank"><img src="https://img.shields.io/static/v1?message=LinkedIn&logo=linkedin&label=&color=0077B5&logoColor=white&labelColor=&style=for-the-badge" height="25" alt="linkedin logo"  /></a>
@@ -58,7 +62,9 @@
   <a href="https://discord.com/users/1529829388353409064" target="_blank"><img src="https://img.shields.io/static/v1?message=Discord&logo=discord&label=&color=7289DA&logoColor=white&labelColor=&style=for-the-badge" height="25" alt="discord logo"  /></a>
 </div>
 
+<br>
 ###
+<br>
 
 <div align="center">
  <img src="./profile/streak.svg" alt="GitHub Streak" height="150" />
@@ -71,13 +77,17 @@
   <img src="https://github-profile-trophy-winning.vercel.app/?username=IridescentGlow&theme=dracula&no-frame=false&no-bg=false&margin-w=8&margin-h=8" alt="trophy graph" />
 </div> -->
 
+<br>
 ###
+<br>
 
 <div align="center">
   <img src="https://github-readme-activity-graph.vercel.app/graph?username=IridescentGlow&theme=dracula&radius=16&area=true" alt="activity-graph graph" />
 </div>
 
+<br>
 ###
+<br>
 
 <picture align="center">
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/IridescentGlow/IridescentGlow/output/pacman-contribution-graph-dark.svg">
@@ -85,12 +95,17 @@
   <img alt="pacman contribution graph" src="https://raw.githubusercontent.com/IridescentGlow/IridescentGlow/output/pacman-contribution-graph.svg">
 </picture>
 
+<br>
 ###
+<br>
 
 <div align="center">
+  <p>⭐ <b>Featured</b></p>
   <a href="https://github.com/IridescentGlow/hyprland-dotfiles">
     <img src="https://github-readme-stats-fast.vercel.app/api/pin/?username=IridescentGlow&repo=hyprland-dotfiles&theme=dracula" alt="Featured Repo" />
   </a>
+  <br><br>
+  <p>⭐ <b>Featured</b></p>
   <a href="https://github.com/ellay21/Medihelp-Frontend">
     <img src="https://github-readme-stats-fast.vercel.app/api/pin/?username=ellay21&repo=Medihelp-Frontend&theme=dracula" alt="Medihelp Frontend" />
   </a>
@@ -98,6 +113,6 @@
 
 <div align="center">
   <a href="https://ko-fi.com/yourname">
-    <img src="https://readme-typing-svg.demolab.com?font=Pacifico&size=32&duration=80&pause=4000&color=FFFFFF&background=FF5E5B&center=true&vCenter=true&width=400&height=60&lines=%E2%98%95+Buy+me+a+coffee!" alt="Buy me a coffee" />
+    <img src="https://readme-typing-svg.demolab.com?font=Pacifico&size=32&duration=80&pause=4000&color=FFFFFF&background=FF5E5B&center=true&vCenter=true&width=400&height=60&lines=%E2%98%95+Buy+me+a+coffee!" alt="Buy me a coffee" style="border-radius: 16px;" />
   </a>
 </div>
