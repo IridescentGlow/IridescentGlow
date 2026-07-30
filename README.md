@@ -10,9 +10,11 @@
 
 <br/>
 
-
 ### 🔭 Currently
 - Learning offensive security, working through VulnHub boxes
+- Building a premium developer portfolio (Next.js + Tailwind)
+- EE student & frontend developer, 7+ years of video editing experience
+- 📝 Latest writeup: [kioptrix-level-1](https://github.com/IridescentGlow/kioptrix-level-1)
 
 
 ###
