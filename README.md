@@ -87,4 +87,10 @@
 
 ###
 
-[![Featured Repo](https://github-readme-stats-fast.vercel.app/api/pin/?username=IridescentGlow&repo=hyprland-dotfiles&theme=dracula&center=true)](https://github.com/IridescentGlow/hyprland-dotfiles)
+<div align="center">
+  <a href="https://github.com/IridescentGlow/hyprland-dotfiles">
+    <img src="https://github-readme-stats-fast.vercel.app/api/pin/?username=IridescentGlow&repo=hyprland-dotfiles&theme=dracula" alt="Featured Repo" />
+  </a>
+</div>
+
+![Isometric Contributions](https://github-contributor-stats.vercel.app/api?username=IridescentGlow&limit=5&theme=dark)
