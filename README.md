@@ -61,7 +61,7 @@
 ###
 
 <div align="center">
-  <img src="https://github-readme-streak-stats-blue-kappa.vercel.app/?user=IridescentGlow&locale=en&mode=daily&theme=dracula&hide_border=false&border_radius=5&order=3" height="150" alt="streak graph"  />
+ <img src="./profile/streak.svg" alt="GitHub Streak" height="150" />
   <img src="https://github-readme-stats-fast.vercel.app/api/top-langs/?username=IridescentGlow&layout=compact&theme=dracula&hide_border=false" height="150" alt="languages graph"  />
 </div>
 
