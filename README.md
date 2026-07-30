@@ -87,6 +87,8 @@
 
 ###
 
+<br/>
+
 
 <picture align="center">
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/IridescentGlow/IridescentGlow/output/pacman-contribution-graph-dark.svg">
@@ -108,6 +110,8 @@
     <img src="https://github-readme-stats-fast.vercel.app/api/pin/?username=ellay21&repo=Medihelp-Frontend&theme=dracula" alt="Medihelp Frontend" />
   </a>
 </div>
+
+<br/>
 
 <div align="center">
   <a href="https://ko-fi.com/yourname">
