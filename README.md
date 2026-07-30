@@ -1,7 +1,10 @@
 <br/>
 
 <div align="center">
-  <img src="https://typingsvg.vercel.app/api/svg?lines=%5B%7B%22text%22%3A%22Hi%2C%20I%27m%20%22%2C%22font%22%3A%22Poppins%22%2C%22color%22%3A%22%23FFFFFF%22%2C%22fontSize%22%3A40%7D%2C%7B%22text%22%3A%22Solarisx%22%2C%22font%22%3A%22Audiowide%22%2C%22color%22%3A%22%23FFFFFF%22%2C%22fontSize%22%3A53%7D%5D&backgroundOpacity=0&cursorStyle=straight&deletionBehavior=stay&pause=4000&typingSpeed=0.04&width=650&height=80&border=false" alt="Typing SVG" />
+  Hi, I'm
+  <a href="https://github.com/bay007/TypingSVG">
+    <img src="https://typingsvg.vercel.app/api/svg?lines=%5B%7B%22text%22%3A%22Solarisx%22%2C%22font%22%3A%22Audiowide%22%2C%22color%22%3A%22%23FFFFFF%22%2C%22fontSize%22%3A53%7D%5D&backgroundOpacity=0&cursorStyle=straight&deletionBehavior=stay&pause=4000&typingSpeed=0.04&deleteSpeed=0.04&width=250&height=70&border=false" alt="Typing SVG" />
+  </a>
 </div>
 
 ###
