@@ -119,7 +119,7 @@
 <br/>
 
 <div align="center">
-  <a href="https://ko-fi.com/yourname">
+  <a href="https://ko-fi.com/edibledank">
     <img src="https://readme-typing-svg.demolab.com?font=Pacifico&size=32&duration=80&pause=4000&color=FFFFFF&background=FF5E5B&center=true&vCenter=true&width=400&height=60&lines=%E2%98%95+Buy+me+a+coffee!" alt="Buy me a coffee" style="border-radius: 16px;" />
   </a>
 </div>
