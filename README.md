@@ -61,7 +61,7 @@
 ###
 
 <div align="center">
-  <img src="https://streak-stats.demolab.com?user=IridescentGlow&locale=en&mode=daily&theme=dracula&hide_border=false&border_radius=5&order=3" height="150" alt="streak graph"  />
+  <img src="[https://streak-stats.demolab.com?user=IridescentGlow&locale=en&mode=daily&theme=dracula&hide_border=false&border_radius=5&order=3](https://vercel.com/iridescentglows-projects/github-readme-streak-stats/FR4xNS3uLchXS7NC12P4NXDjkxtx)" height="150" alt="streak graph"  />
   <img src="https://github-readme-stats-fast.vercel.app/api/top-langs/?username=IridescentGlow&layout=compact&theme=dracula&hide_border=false" height="150" alt="languages graph"  />
 </div>
 
