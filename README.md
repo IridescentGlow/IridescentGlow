@@ -103,8 +103,6 @@
   <a href="https://github.com/IridescentGlow/hyprland-dotfiles">
     <img src="https://github-readme-stats-fast.vercel.app/api/pin/?username=IridescentGlow&repo=hyprland-dotfiles&theme=dracula" alt="Featured Repo" />
   </a>
-  <br><br>
-  <p>⭐ <b>Featured</b></p>
   <a href="https://github.com/ellay21/Medihelp-Frontend">
     <img src="https://github-readme-stats-fast.vercel.app/api/pin/?username=ellay21&repo=Medihelp-Frontend&theme=dracula" alt="Medihelp Frontend" />
   </a>
