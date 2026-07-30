@@ -1,7 +1,8 @@
 <br/>
+
 <div align="center">
-  <a href="https://git.io/typing-svg">
-    <img src="https://readme-typing-svg.demolab.com?font=Audiowide&size=53&pause=4000&color=FFFFFF&center=true&vCenter=true&width=600&lines=Hi%2C+I'm+Solarisx" alt="Typing SVG" />
+  <a href="https://github.com/bay007/TypingSVG">
+    <img src="https://typingsvg.vercel.app/api/svg?lines=[{%22text%22:%22Hi,+I'm+Solarisx%22}]&font=Audiowide&fontSize=53&color=%23FFFFFF&cursorStyle=block&deletionBehavior=stay&pause=4000&typingSpeed=0.08&deleteSpeed=0.08&width=600&height=70&border=false" alt="Typing SVG" />
   </a>
 </div>
 
