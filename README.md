@@ -87,4 +87,4 @@
 
 ###
 
-[![Featured Repo](https://github-readme-stats-fast.vercel.app/api/pin/?username=IridescentGlow&repo=hyprland-dotfiles&theme=dracula)](https://github.com/IridescentGlow/hyprland-dotfiles)
+[![Featured Repo](https://github-readme-stats-fast.vercel.app/api/pin/?username=IridescentGlow&repo=hyprland-dotfiles&theme=dracula&center=true)](https://github.com/IridescentGlow/hyprland-dotfiles)
