@@ -1,12 +1,12 @@
-![Header](https://capsule-render.vercel.app/api?type=waving&color=0:0D1117,50:161B22,100:8957E5&height=280&section=header&text=Hi,%20I'm%20Solarisx&fontSize=55&fontColor=FFFFFF&animation=fadeIn)
-[![Discord Presence](https://lanyard.cnrad.dev/api/1529829388353409064)](https://discord.com/users/1529829388353409064)
+![Header](https://capsule-render.vercel.app/api?type=waving&color=0:00000000,50:161B22,100:8957E5&height=280&section=header&text=Hi,%20I'm%20Solarisx&fontSize=55&fontColor=FFFFFF&animation=fadeIn)
+[![Discord Presence](https://lanyard.cnrad.dev/api/1529829388353409000)](https://discord.com/users/1529829388353409000)
 <br/>
 
-<div align="center">
+<!-- <div align="center">
   <a href="https://github.com/bay007/TypingSVG">
     <img src="https://typingsvg.vercel.app/api/svg?lines=%5B%7B%22text%22%3A%22Hi%2C%20I%27m%20Solarisx%22%2C%22font%22%3A%22Audiowide%22%2C%22color%22%3A%22%23FFFFFF%22%2C%22fontSize%22%3A53%7D%5D&backgroundOpacity=0&cursorStyle=straight&deletionBehavior=stay&pause=4000&typingSpeed=0.01&deleteSpeed=0.04&width=600&height=70&border=false" alt="Typing SVG" />
   </a>
-</div>
+</div> -->
 
 ###
 
