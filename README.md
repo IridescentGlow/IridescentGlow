@@ -1,5 +1,5 @@
 ![Header](https://capsule-render.vercel.app/api?type=waving&color=0:00000000,50:161B22,100:8957E5&height=280&section=header&text=Hi,%20I'm%20Solarisx&fontSize=55&fontColor=FFFFFF&animation=fadeIn)
-[![Discord Presence](https://lanyard.cnrad.dev/api/1529829388353409000)](https://discord.com/users/1529829388353409000)
+[![Discord Presence](https://lanyard.cnrad.dev/api/1529829388353409064)](https://discord.com/users/1529829388353409064)
 <br/>
 
 <!-- <div align="center">
