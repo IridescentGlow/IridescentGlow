@@ -89,7 +89,7 @@
 
 
 <div align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=IridescentGlow&theme=dracula&radius=16&area=true" alt="activity-graph graph" />
+  <img src="https://github-readme-activity-graph-neon-ten.vercel.app/graph?username=IridescentGlow&theme=dracula&radius=16&area=true" alt="activity-graph graph" />
 </div>
 
 
