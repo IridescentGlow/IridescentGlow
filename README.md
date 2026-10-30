@@ -75,7 +75,7 @@
 
 <div align="center">
  <img src="./profile/streak.svg" alt="GitHub Streak" height="150" />
-  <img src="https://github-readme-stats-fast.vercel.app/api/top-langs/?username=IridescentGlow&layout=compact&theme=dracula&hide_border=false" height="150" alt="languages graph"  />
+  <img src="./profile/top-langs.svg" height="150" alt="languages graph"  />
 </div>
 
 ###
@@ -111,10 +111,10 @@
 <div align="center">
   <p>⭐ <b>Featured</b></p>
   <a href="https://github.com/IridescentGlow/hyprland-dotfiles">
-    <img src="https://github-readme-stats-fast.vercel.app/api/pin/?username=IridescentGlow&repo=hyprland-dotfiles&theme=dracula" alt="Featured Repo" />
+    <img src="./profile/pin-hyprland-dotfiles.svg" alt="Featured Repo" />
   </a>
   <a href="https://github.com/ellay21/Medihelp-Frontend">
-    <img src="https://github-readme-stats-fast.vercel.app/api/pin/?username=ellay21&repo=Medihelp-Frontend&theme=dracula" alt="Medihelp Frontend" />
+    <img src="./profile/pin-medihelp-frontend.svg" alt="Medihelp Frontend" />
   </a>
 </div>
 

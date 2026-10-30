@@ -1,0 +1,53 @@
+name: Update README cards
+
+on:
+  schedule:
+    - cron: "23 */12 * * *"
+  push:
+    paths:
+      - ".github/workflows/readme-cards.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Top languages card
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: top-langs
+          options: username=${{ github.repository_owner }}&layout=compact&theme=dracula&hide_border=false
+          path: profile/top-langs.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fail_on_error: true
+
+      - name: Pin card - hyprland-dotfiles
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=${{ github.repository_owner }}&repo=hyprland-dotfiles&theme=dracula
+          path: profile/pin-hyprland-dotfiles.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fail_on_error: true
+
+      - name: Pin card - Medihelp-Frontend
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=ellay21&repo=Medihelp-Frontend&theme=dracula
+          path: profile/pin-medihelp-frontend.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fail_on_error: true
+
+      - name: Commit cards
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add profile/top-langs.svg profile/pin-hyprland-dotfiles.svg profile/pin-medihelp-frontend.svg
+          git commit -m "Update README cards" || exit 0
+          git pull --rebase
+          git push
