@@ -83,3 +83,15 @@
   </picture>
   </a>
 </p>
+
+<br/>
+
+<p align="center">
+  <a href="https://ko-fi.com/edibledank">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./profile/kofi-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./profile/kofi-light.svg">
+    <img src="./profile/kofi-light.svg" height="52" alt="Buy me a coffee on Ko-fi">
+  </picture>
+  </a>
+</p>

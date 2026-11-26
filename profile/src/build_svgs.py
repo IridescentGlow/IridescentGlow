@@ -1,7 +1,7 @@
 """Builds the README hero (the name drawn as its own vector construction, rendered by a sweeping playhead)
-and the gray tool/social icons.
+the gray tool/social icons and the Ko-fi button.
 
-Writes profile/hero-{dark,light}.svg and profile/icons/*.svg. Needs fonttools, network access and Bricolage Grotesque:
+Writes profile/hero-{dark,light}.svg, profile/kofi-{dark,light}.svg and profile/icons/*.svg. Needs fonttools, network access and Bricolage Grotesque:
   curl -L -o Bricolage.ttf "https://github.com/google/fonts/raw/main/ofl/bricolagegrotesque/BricolageGrotesque%5Bopsz,wdth,wght%5D.ttf"
   python build_svgs.py Bricolage.ttf
 """
@@ -19,8 +19,8 @@ OUT = Path(__file__).resolve().parent.parent
 
 # GitHub's own foreground / muted / border colors, so the hero sits on the page instead of in a box.
 THEMES = {
-    "dark": {"fg": "#E6EDF3", "muted": "#7D8590", "guide": "#30363D"},
-    "light": {"fg": "#1F2328", "muted": "#8C959F", "guide": "#D0D7DE"},
+    "dark": {"fg": "#E6EDF3", "muted": "#7D8590", "guide": "#30363D", "border": "#3D444D"},
+    "light": {"fg": "#1F2328", "muted": "#8C959F", "guide": "#D0D7DE", "border": "#D0D7DE"},
 }
 
 NAME = "Solarisx"
@@ -132,6 +132,37 @@ def hero(theme, outline, contours, guides, name_w):
 """
 
 
+def text_path(font, text, size, x, baseline):
+    """Outlines `text` starting at x; returns (path d, advance width)."""
+    cmap, hmtx, glyphs = font.getBestCmap(), font["hmtx"], font.getGlyphSet()
+    scale = size / font["head"].unitsPerEm
+    pen = SVGPathPen(glyphs, ntos=lambda v: f"{v:.1f}")
+    start = x
+    for ch in text:
+        name = cmap[ord(ch)]
+        glyphs[name].draw(TransformPen(pen, (scale, 0, 0, -scale, x, baseline)))
+        x += hmtx[name][0] * scale
+    return pen.getCommands(), x - start
+
+
+def kofi_button(theme, font):
+    """A quiet outlined pill: the Ko-fi cup plus "Buy me a coffee" in the hero's typeface."""
+    c = THEMES[theme]
+    cup = re.search(r' d="([^"]+)"', Path(OUT, "icons", "kofi.svg").read_text()).group(1)
+    size, icon, gap, pad_x, h = 18, 20, 12, 26, 52
+    _, text_w = text_path(font, "Buy me a coffee", size, 0, 0)
+    w = round(pad_x * 2 + icon + gap + text_w)
+    d, _ = text_path(font, "Buy me a coffee", size, pad_x + icon + gap, h / 2 + size * .36)
+    s = icon / 24
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-label="Buy me a coffee on Ko-fi">
+  <title>Buy me a coffee on Ko-fi</title>
+  <rect x=".5" y=".5" width="{w - 1}" height="{h - 1}" rx="{(h - 1) / 2}" fill="none" stroke="{c['border']}"/>
+  <path transform="translate({pad_x} {(h - icon) / 2}) scale({s})" d="{cup}" fill="{c['fg']}"/>
+  <path d="{d}" fill="{c['fg']}"/>
+</svg>
+"""
+
+
 # simple-icons 9 is the last release with the Adobe, Ableton and LinkedIn marks; Hyprland arrived later.
 ICONS = {
     "react": 9, "nextdotjs": 9, "javascript": 9, "tailwindcss": 9, "css3": 9, "vite": 9,
@@ -158,6 +189,8 @@ def icons():
 
 if __name__ == "__main__":
     icons()
-    parts = build(load_font())
+    font = load_font()
+    parts = build(font)
     for theme in THEMES:
         Path(OUT, f"hero-{theme}.svg").write_text(hero(theme, *parts))
+        Path(OUT, f"kofi-{theme}.svg").write_text(kofi_button(theme, font))
