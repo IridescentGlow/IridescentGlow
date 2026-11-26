@@ -176,14 +176,16 @@ def now_panel():
 """
 
 
-def label(text, filename):
+def label(text, name):
+    """Writes label-<name>.svg (gold, for dark mode) and label-<name>-light.svg (violet, for light mode)."""
     size, weight = 26, 700
     w = round(text_width(text, size, weight)) + 4
     d = text_path(text, size, weight, 2, 30)
-    Path(OUT, filename).write_text(
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="40" viewBox="0 0 {w} 40" role="img" aria-label="{text}">'
-        f'<path d="{d}" fill="{GOLD}"/></svg>\n'
-    )
+    for suffix, color in (("", GOLD), ("-light", "#4B2FB8")):
+        Path(OUT, f"label-{name}{suffix}.svg").write_text(
+            f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="40" viewBox="0 0 {w} 40" role="img" aria-label="{text}">'
+            f'<path d="{d}" fill="{color}"/></svg>\n'
+        )
 
 
 def kofi():
@@ -213,6 +215,6 @@ if __name__ == "__main__":
     Path(OUT, "hero.svg").write_text(hero())
     Path(OUT, "now.svg").write_text(now_panel())
     Path(OUT, "kofi.svg").write_text(kofi())
-    label("Tools I use", "label-tools.svg")
-    label("Activity", "label-activity.svg")
-    label("Featured work", "label-featured.svg")
+    label("Tools I use", "tools")
+    label("Activity", "activity")
+    label("Featured work", "featured")

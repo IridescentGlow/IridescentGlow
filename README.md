@@ -19,7 +19,10 @@
 
 <br/><br/>
 
-<img src="./profile/label-tools.svg" height="32" alt="Tools I use" />
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="./profile/label-tools-light.svg">
+  <img src="./profile/label-tools.svg" height="32" alt="Tools I use" />
+</picture>
 
 <p align="center">
   <img src="https://skillicons.dev/icons?i=react,nextjs,js,tailwind,css,vite,py,cpp,java,linux,arch,git,figma,ps,ae,pr,ableton&theme=dark&perline=9" alt="React, Next.js, JavaScript, Tailwind CSS, CSS, Vite, Python, C++, Java, Linux, Arch Linux, Git, Figma, Photoshop, After Effects, Premiere Pro, Ableton Live" />
@@ -27,7 +30,10 @@
 
 <br/>
 
-<img src="./profile/label-activity.svg" height="32" alt="Activity" />
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="./profile/label-activity-light.svg">
+  <img src="./profile/label-activity.svg" height="32" alt="Activity" />
+</picture>
 
 <p align="center">
   <img src="./profile/streak.svg" height="165" alt="GitHub contribution streak" />
@@ -46,7 +52,10 @@
 
 <br/><br/>
 
-<img src="./profile/label-featured.svg" height="32" alt="Featured work" />
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="./profile/label-featured-light.svg">
+  <img src="./profile/label-featured.svg" height="32" alt="Featured work" />
+</picture>
 
 <p align="center">
   <a href="https://github.com/IridescentGlow/hyprland-dotfiles"><img src="./profile/pin-hyprland-dotfiles.svg" alt="hyprland-dotfiles" /></a>
