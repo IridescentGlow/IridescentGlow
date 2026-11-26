@@ -56,9 +56,9 @@
 </p>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/IridescentGlow/IridescentGlow/output/pacman-contribution-graph-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/IridescentGlow/IridescentGlow/output/pacman-contribution-graph.svg">
-  <img alt="Pac-Man eating the contribution graph" src="https://raw.githubusercontent.com/IridescentGlow/IridescentGlow/output/pacman-contribution-graph.svg" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="./profile/contrib-skyline-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./profile/contrib-skyline-light.svg">
+  <img src="./profile/contrib-skyline-light.svg" width="100%" alt="Contributions over the last year as a skyline of days">
 </picture>
 
 <br/><br/>

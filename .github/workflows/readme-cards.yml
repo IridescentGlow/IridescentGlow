@@ -7,6 +7,7 @@ on:
     paths:
       - ".github/workflows/readme-cards.yml"
       - "profile/src/langs.py"
+      - "profile/src/contrib.py"
   workflow_dispatch:
 
 jobs:
@@ -75,11 +76,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
 
+      - name: Contribution skyline
+        run: python3 profile/src/contrib.py skyline
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+
       - name: Commit cards
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add profile/pin-*.svg profile/activity-graph-*.svg profile/langs-*.svg
+          git add profile/pin-*.svg profile/activity-graph-*.svg profile/langs-*.svg profile/contrib-skyline-*.svg
           git commit -m "Update README cards" || exit 0
           git pull --rebase
           git push
