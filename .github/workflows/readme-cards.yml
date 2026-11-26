@@ -20,7 +20,7 @@ jobs:
         uses: stats-organization/github-readme-stats-action@v2
         with:
           card: top-langs
-          options: username=${{ github.repository_owner }}&layout=compact&theme=dracula&hide_border=false
+          options: username=${{ github.repository_owner }}&layout=compact&langs_count=8&bg_color=15112E&title_color=F5D06F&text_color=CFC8EA&icon_color=2EE6D6&border_color=2A2450&border_radius=16
           path: profile/top-langs.svg
           token: ${{ secrets.GITHUB_TOKEN }}
           fail_on_error: true
@@ -29,7 +29,7 @@ jobs:
         uses: stats-organization/github-readme-stats-action@v2
         with:
           card: pin
-          options: username=${{ github.repository_owner }}&repo=hyprland-dotfiles&theme=dracula
+          options: username=${{ github.repository_owner }}&repo=hyprland-dotfiles&bg_color=15112E&title_color=F5D06F&text_color=CFC8EA&icon_color=2EE6D6&border_color=2A2450&border_radius=16
           path: profile/pin-hyprland-dotfiles.svg
           token: ${{ secrets.GITHUB_TOKEN }}
           fail_on_error: true
@@ -38,16 +38,27 @@ jobs:
         uses: stats-organization/github-readme-stats-action@v2
         with:
           card: pin
-          options: username=ellay21&repo=Medihelp-Frontend&theme=dracula
-          path: profile/pin-medihelp-frontend.svg
+          options: username=ellay21&repo=Medihelp-Frontend&bg_color=15112E&title_color=F5D06F&text_color=CFC8EA&icon_color=2EE6D6&border_color=2A2450&border_radius=16
+          path: profile/pin-medihelp-frontend.svg profile/activity-graph.svg
           token: ${{ secrets.GITHUB_TOKEN }}
           fail_on_error: true
+
+      - name: Activity graph
+        run: |
+          url="https://github-readme-activity-graph.vercel.app/graph?username=${{ github.repository_owner }}&bg_color=15112E&color=CFC8EA&title_color=F5D06F&line=7C5CFF&point=2EE6D6&area=true&area_color=7C5CFF&hide_border=true&radius=16&custom_title=Contributions%20over%20the%20last%2031%20days"
+          if curl -fsSL --retry 3 -m 30 "$url" -o /tmp/activity.svg \
+             && grep -q "<svg" /tmp/activity.svg \
+             && ! grep -q "Can't fetch" /tmp/activity.svg; then
+            mv /tmp/activity.svg profile/activity-graph.svg
+          else
+            echo "::warning::Activity graph fetch failed; keeping the previous profile/activity-graph.svg"
+          fi
 
       - name: Commit cards
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add profile/top-langs.svg profile/pin-hyprland-dotfiles.svg profile/pin-medihelp-frontend.svg
+          git add profile/top-langs.svg profile/pin-hyprland-dotfiles.svg profile/pin-medihelp-frontend.svg profile/activity-graph.svg
           git commit -m "Update README cards" || exit 0
           git pull --rebase
           git push
