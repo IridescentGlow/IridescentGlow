@@ -1,10 +1,13 @@
-"""Builds the README hero: the name drawn as its own vector construction, rendered by a sweeping playhead.
+"""Builds the README hero (the name drawn as its own vector construction, rendered by a sweeping playhead)
+and the gray tool/social icons.
 
-Writes profile/hero-dark.svg and profile/hero-light.svg. Needs fonttools and Bricolage Grotesque:
+Writes profile/hero-{dark,light}.svg and profile/icons/*.svg. Needs fonttools, network access and Bricolage Grotesque:
   curl -L -o Bricolage.ttf "https://github.com/google/fonts/raw/main/ofl/bricolagegrotesque/BricolageGrotesque%5Bopsz,wdth,wght%5D.ttf"
   python build_svgs.py Bricolage.ttf
 """
+import re
 import sys
+import urllib.request
 from pathlib import Path
 
 from fontTools.pens.svgPathPen import SVGPathPen
@@ -129,7 +132,32 @@ def hero(theme, outline, contours, guides, name_w):
 """
 
 
+# simple-icons 9 is the last release with the Adobe, Ableton and LinkedIn marks; Hyprland arrived later.
+ICONS = {
+    "react": 9, "nextdotjs": 9, "javascript": 9, "tailwindcss": 9, "css3": 9, "vite": 9,
+    "python": 9, "cplusplus": 9, "openjdk": 9, "git": 9, "linux": 9, "archlinux": 9, "hyprland": 13,
+    "figma": 9, "adobephotoshop": 9, "adobeaftereffects": 9, "adobepremierepro": 9, "abletonlive": 9,
+    "linkedin": 9, "telegram": 9, "instagram": 9, "gmail": 9, "discord": 9, "kofi": 9,
+}
+ICON_GRAY = "#8B949E"  # GitHub's muted gray; readable on both the light and dark page
+
+
+def icons():
+    out = Path(OUT, "icons")
+    out.mkdir(exist_ok=True)
+    for slug, version in ICONS.items():
+        url = f"https://cdn.jsdelivr.net/npm/simple-icons@{version}/icons/{slug}.svg"
+        src = urllib.request.urlopen(url).read().decode()
+        title = re.search(r"<title>(.*?)</title>", src).group(1)
+        d = re.search(r'<path d="([^"]+)"', src).group(1)
+        Path(out, f"{slug}.svg").write_text(
+            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-label="{title}">'
+            f'<title>{title}</title><path fill="{ICON_GRAY}" d="{d}"/></svg>\n'
+        )
+
+
 if __name__ == "__main__":
+    icons()
     parts = build(load_font())
     for theme in THEMES:
         Path(OUT, f"hero-{theme}.svg").write_text(hero(theme, *parts))

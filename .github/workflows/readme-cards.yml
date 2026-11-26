@@ -6,6 +6,7 @@ on:
   push:
     paths:
       - ".github/workflows/readme-cards.yml"
+      - "profile/src/langs.py"
   workflow_dispatch:
 
 jobs:
@@ -68,11 +69,17 @@ jobs:
             fetch dark "bg_color=00000000&color=7D8590&title_color=E6EDF3&line=E6EDF3&point=E6EDF3&area=true&area_color=7D8590&hide_border=true"
             fetch light "bg_color=00000000&color=59636E&title_color=1F2328&line=1F2328&point=1F2328&area=true&area_color=59636E&hide_border=true"
 
+      - name: Languages card
+        run: python3 profile/src/langs.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+
       - name: Commit cards
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add profile/pin-*.svg profile/activity-graph-*.svg
+          git add profile/pin-*.svg profile/activity-graph-*.svg profile/langs-*.svg
           git commit -m "Update README cards" || exit 0
           git pull --rebase
           git push
