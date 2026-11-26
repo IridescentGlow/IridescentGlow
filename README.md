@@ -3,7 +3,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./profile/hero-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./profile/hero-light.svg">
-  <img src="./profile/hero-light.svg" width="100%" alt="Solarisx">
+  <img src="./profile/hero-light.svg" width="100%" alt="SolarisX">
 </picture>
 
 <p align="center">Front-end developer and electrical engineering student. I've been editing video for 7+ years.</p>
