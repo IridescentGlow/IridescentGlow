@@ -39,7 +39,7 @@ jobs:
         with:
           card: pin
           options: username=ellay21&repo=Medihelp-Frontend&bg_color=15112E&title_color=F5D06F&text_color=CFC8EA&icon_color=2EE6D6&border_color=2A2450&border_radius=16
-          path: profile/pin-medihelp-frontend.svg profile/activity-graph.svg
+          path: profile/pin-medihelp-frontend.svg
           token: ${{ secrets.GITHUB_TOKEN }}
           fail_on_error: true
 
