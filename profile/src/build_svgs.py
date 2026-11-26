@@ -1,4 +1,4 @@
-"""Builds the README hero, the gray tool/social icons and the Ko-fi button.
+"""Builds the README hero, the gray tool icons, the animated social icons and the Ko-fi button.
 
 The hero builds the name the way a type designer would, then lets it go again, on a loop:
 guides draw in, each glyph's on/off-curve points are plotted along the contour, the control
@@ -6,7 +6,7 @@ polygon connects them, a pen traces the real outline, the letter is engraved wit
 lines, and the hatching thickens until it merges into solid ink. After a hold the ink splits back
 into hatching, the hatch lines slide away and the outline lets go.
 
-Writes profile/hero-{dark,light}.svg, profile/kofi-{dark,light}.svg and profile/icons/*.svg.
+Writes profile/hero-{dark,light}.svg, profile/kofi-{dark,light}.svg, profile/icons/*.svg and profile/icons/social-*.svg.
 Needs fonttools, network access and Bricolage Grotesque:
   curl -L -o Bricolage.ttf "https://github.com/google/fonts/raw/main/ofl/bricolagegrotesque/BricolageGrotesque%5Bopsz,wdth,wght%5D.ttf"
   python build_svgs.py Bricolage.ttf
@@ -286,8 +286,59 @@ def icons():
         )
 
 
+# Brand colours each social icon briefly wipes into: (gradient stops, gradient direction x1 y1 x2 y2).
+SOCIALS = {
+    "linkedin": (["#2E86DE", "#0A66C2"], (0, 0, 1, 1)),
+    "telegram": (["#37AEE2", "#1E96C8"], (0, 0, 0, 1)),
+    "instagram": (["#FEDA75", "#FA7E1E", "#D62976", "#962FBF", "#4F5BD5"], (0, 1, 1, 0)),
+    "gmail": (["#4285F4", "#EA4335", "#FBBC05", "#34A853"], (0, 0, 1, 0)),
+    "discord": (["#7983F5", "#5865F2"], (0, 0, 1, 1)),
+    "kofi": (["#FF8A7A", "#FF5E5B"], (0, 0, 1, 1)),
+}
+SOCIAL_LOOP = 4.0
+SOCIAL_STAGGER = 0.12  # the colour ripples across the row, one icon after the next
+
+
+def social_icons():
+    """Gray icon with a brand-coloured copy on top, revealed by a quick feathered wipe every SOCIAL_LOOP seconds."""
+    for i, (slug, (colors, (x1, y1, x2, y2))) in enumerate(SOCIALS.items()):
+        src = Path(OUT, "icons", f"{slug}.svg").read_text()
+        title = re.search(r"<title>(.*?)</title>", src).group(1)
+        d = re.search(r' d="([^"]+)"', src).group(1)
+        stops = "".join(
+            f'<stop offset="{j / (len(colors) - 1):.2f}" stop-color="{col}"/>' for j, col in enumerate(colors)
+        )
+        pct = lambda t: f"{100 * t / SOCIAL_LOOP:.1f}%"
+        Path(OUT, "icons", f"social-{slug}.svg").write_text(f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-label="{title}">
+  <title>{title}</title>
+  <style>
+    .wipe {{ animation: wipe {SOCIAL_LOOP}s infinite both; animation-delay: {i * SOCIAL_STAGGER:.2f}s; }}
+    @keyframes wipe {{
+      0%, {pct(1.6)} {{ transform: translateX(0); animation-timing-function: cubic-bezier(.3,0,.2,1); }}
+      {pct(1.9)}, {pct(2.5)} {{ transform: translateX(32px); animation-timing-function: cubic-bezier(.6,0,.8,1); }}
+      {pct(2.8)}, 100% {{ transform: translateX(64px); }}
+    }}
+    @media (prefers-reduced-motion: reduce) {{ .wipe {{ animation: none; }} }}
+  </style>
+  <defs>
+    <linearGradient id="brand" x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}">{stops}</linearGradient>
+    <linearGradient id="edge">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".2" stop-color="#fff"/>
+      <stop offset=".8" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <mask id="reveal" maskUnits="userSpaceOnUse" x="-2" y="-2" width="28" height="28">
+      <rect class="wipe" x="-40" y="-4" width="40" height="32" fill="url(#edge)"/>
+    </mask>
+  </defs>
+  <path fill="{ICON_GRAY}" d="{d}"/>
+  <path fill="url(#brand)" mask="url(#reveal)" d="{d}"/>
+</svg>
+""")
+
+
 if __name__ == "__main__":
     icons()
+    social_icons()
     font = load_font()
     parts = build(font)
     for theme in THEMES:

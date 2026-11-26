@@ -8,6 +8,10 @@
 
 <p align="center">Front-end developer and electrical engineering student. I've been editing video for 7+ years.</p>
 
+<p align="center">
+  <a href="https://www.linkedin.com/in/edible-dank-84932233b/"><img src="./profile/icons/social-linkedin.svg" width="36" height="36" alt="LinkedIn" title="LinkedIn" /></a> &emsp;&ensp; <a href="https://t.me/Lumianara"><img src="./profile/icons/social-telegram.svg" width="36" height="36" alt="Telegram" title="Telegram" /></a> &emsp;&ensp; <a href="https://www.instagram.com/phazotron_"><img src="./profile/icons/social-instagram.svg" width="36" height="36" alt="Instagram" title="Instagram" /></a> &emsp;&ensp; <a href="mailto:contactphazotron@gmail.com"><img src="./profile/icons/social-gmail.svg" width="36" height="36" alt="Email" title="Email" /></a> &emsp;&ensp; <a href="https://discord.com/users/1529829388353409064"><img src="./profile/icons/social-discord.svg" width="36" height="36" alt="Discord" title="Discord" /></a> &emsp;&ensp; <a href="https://ko-fi.com/edibledank"><img src="./profile/icons/social-kofi.svg" width="36" height="36" alt="Ko-fi" title="Ko-fi" /></a>
+</p>
+
 <br/>
 
 <p align="center"><b>Right now</b></p>
@@ -26,12 +30,6 @@
   <img src="./profile/icons/react.svg" width="30" height="30" alt="React" title="React" /> &emsp; <img src="./profile/icons/nextdotjs.svg" width="30" height="30" alt="Next.js" title="Next.js" /> &emsp; <img src="./profile/icons/javascript.svg" width="30" height="30" alt="JavaScript" title="JavaScript" /> &emsp; <img src="./profile/icons/tailwindcss.svg" width="30" height="30" alt="Tailwind CSS" title="Tailwind CSS" /> &emsp; <img src="./profile/icons/css3.svg" width="30" height="30" alt="CSS3" title="CSS3" /> &emsp; <img src="./profile/icons/vite.svg" width="30" height="30" alt="Vite" title="Vite" /><br/><br/>
   <img src="./profile/icons/python.svg" width="30" height="30" alt="Python" title="Python" /> &emsp; <img src="./profile/icons/cplusplus.svg" width="30" height="30" alt="C++" title="C++" /> &emsp; <img src="./profile/icons/openjdk.svg" width="30" height="30" alt="OpenJDK" title="OpenJDK" /> &emsp; <img src="./profile/icons/git.svg" width="30" height="30" alt="Git" title="Git" /> &emsp; <img src="./profile/icons/linux.svg" width="30" height="30" alt="Linux" title="Linux" /> &emsp; <img src="./profile/icons/archlinux.svg" width="30" height="30" alt="Arch Linux" title="Arch Linux" /> &emsp; <img src="./profile/icons/hyprland.svg" width="30" height="30" alt="Hyprland" title="Hyprland" /><br/><br/>
   <img src="./profile/icons/figma.svg" width="30" height="30" alt="Figma" title="Figma" /> &emsp; <img src="./profile/icons/adobephotoshop.svg" width="30" height="30" alt="Adobe Photoshop" title="Adobe Photoshop" /> &emsp; <img src="./profile/icons/adobeaftereffects.svg" width="30" height="30" alt="Adobe After Effects" title="Adobe After Effects" /> &emsp; <img src="./profile/icons/adobepremierepro.svg" width="30" height="30" alt="Adobe Premiere Pro" title="Adobe Premiere Pro" /> &emsp; <img src="./profile/icons/abletonlive.svg" width="30" height="30" alt="Ableton Live" title="Ableton Live" />
-</p>
-
-<br/>
-
-<p align="center">
-  <a href="https://www.linkedin.com/in/edible-dank-84932233b/"><img src="./profile/icons/linkedin.svg" width="26" height="26" alt="LinkedIn" title="LinkedIn" /></a> &emsp; <a href="https://t.me/Lumianara"><img src="./profile/icons/telegram.svg" width="26" height="26" alt="Telegram" title="Telegram" /></a> &emsp; <a href="https://www.instagram.com/phazotron_"><img src="./profile/icons/instagram.svg" width="26" height="26" alt="Instagram" title="Instagram" /></a> &emsp; <a href="mailto:contactphazotron@gmail.com"><img src="./profile/icons/gmail.svg" width="26" height="26" alt="Gmail" title="Gmail" /></a> &emsp; <a href="https://discord.com/users/1529829388353409064"><img src="./profile/icons/discord.svg" width="26" height="26" alt="Discord" title="Discord" /></a> &emsp; <a href="https://ko-fi.com/edibledank"><img src="./profile/icons/kofi.svg" width="26" height="26" alt="Ko-fi" title="Ko-fi" /></a>
 </p>
 
 <br/>
