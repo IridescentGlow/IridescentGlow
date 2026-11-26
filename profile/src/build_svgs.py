@@ -1,7 +1,13 @@
-"""Builds the README hero (the name drawn as its own vector construction, rendered by a sweeping playhead)
-the gray tool/social icons and the Ko-fi button.
+"""Builds the README hero, the gray tool/social icons and the Ko-fi button.
 
-Writes profile/hero-{dark,light}.svg, profile/kofi-{dark,light}.svg and profile/icons/*.svg. Needs fonttools, network access and Bricolage Grotesque:
+The hero builds the name the way a type designer would, then lets it go again, on a loop:
+guides draw in, each glyph's on/off-curve points are plotted along the contour, the control
+polygon connects them, a pen traces the real outline, the letter is engraved with diagonal hatch
+lines, and the hatching thickens until it merges into solid ink. After a hold the ink splits back
+into hatching, the hatch lines slide away and the outline lets go.
+
+Writes profile/hero-{dark,light}.svg, profile/kofi-{dark,light}.svg and profile/icons/*.svg.
+Needs fonttools, network access and Bricolage Grotesque:
   curl -L -o Bricolage.ttf "https://github.com/google/fonts/raw/main/ofl/bricolagegrotesque/BricolageGrotesque%5Bopsz,wdth,wght%5D.ttf"
   python build_svgs.py Bricolage.ttf
 """
@@ -23,11 +29,24 @@ THEMES = {
     "light": {"fg": "#1F2328", "muted": "#8C959F", "guide": "#D0D7DE", "border": "#D0D7DE"},
 }
 
-NAME = "Solarisx"
+NAME = "SolarisX"
 W = 1200
-X0, TOP = 20, 64  # TOP leaves room for the playhead's head above the cap height
+MARGIN = 24
 TRACKING = -0.025  # in em
-LOOP = "11s"
+
+# Timeline, in seconds of one loop. Every glyph runs the same timeline, offset by LETTER_STAGGER.
+LOOP = 13.0
+LETTER_STAGGER = 0.1
+POINT_STAGGER = 0.01
+IN_OUT = "cubic-bezier(.65,0,.35,1)"
+TRACE = "cubic-bezier(.45,0,.55,1)"
+TRACE_SPLINE = ".45 0 .55 1"  # same curve for the SMIL pen so it stays on the tip of the CSS-drawn line
+POP = "cubic-bezier(.34,1.56,.64,1)"
+SWELL = "cubic-bezier(.5,0,.25,1)"
+TRACE_START, TRACE_END = 1.8, 3.8
+HATCH_GAP = 7  # perpendicular distance between hatch lines
+HATCH_INK = HATCH_GAP + 1.5  # stroke width at which neighbouring hatch lines overlap into solid
+HATCH_STAGGER = 0.012
 
 
 def load_font():
@@ -35,99 +54,179 @@ def load_font():
 
 
 def build(font):
-    """Returns the outline path, on/off-curve points per contour, guide heights and the name's width."""
+    """Lays the name out across the full width. Returns per-glyph geometry, guide heights and the SVG height."""
     cmap, hmtx, glyf = font.getBestCmap(), font["hmtx"], font["glyf"]
-    glyphs, upem = font.getGlyphSet(), font["head"].unitsPerEm
+    glyphs, upem, os2 = font.getGlyphSet(), font["head"].unitsPerEm, font["OS/2"]
+    names = [cmap[ord(ch)] for ch in NAME]
 
-    os2 = font["OS/2"]
-    # Fit the name to the full width, leaving room on the right for the playhead to park.
-    advance = sum(hmtx[cmap[ord(ch)]][0] / upem + TRACKING for ch in NAME) - TRACKING
-    size = (W - X0 - 56) / advance
+    advance = sum(hmtx[n][0] / upem + TRACKING for n in names) - TRACKING
+    size = (W - 2 * MARGIN) / advance
     scale, tracking = size / upem, TRACKING * size
-    baseline = TOP + os2.sCapHeight * scale
-    pen = SVGPathPen(glyphs, ntos=lambda v: f"{v:.1f}")
-    contours = []
-    x = X0
-    for ch in NAME:
-        name = cmap[ord(ch)]
-        glyphs[name].draw(TransformPen(pen, (scale, 0, 0, -scale, x, baseline)))
-        coords, end_pts, flags = glyf[name].getCoordinates(glyf)
-        start = 0
+    y_max = max(glyf[n].yMax for n in names) * scale
+    y_min = min(glyf[n].yMin for n in names) * scale
+    baseline = MARGIN + y_max
+
+    letters, x = [], MARGIN
+    for n in names:
+        pen = SVGPathPen(glyphs, ntos=lambda v: f"{v:.1f}")
+        glyphs[n].draw(TransformPen(pen, (scale, 0, 0, -scale, x, baseline)))
+        d = pen.getCommands()
+        coords, end_pts, flags = glyf[n].getCoordinates(glyf)
+        points, start = [], 0
         for end in end_pts:
-            contours.append([
+            points.append([
                 (x + px * scale, baseline - py * scale, bool(flags[i] & 1))
                 for i, (px, py) in enumerate(coords[start:end + 1], start)
             ])
             start = end + 1
-        x += hmtx[name][0] * scale + tracking
-    guides = {
-        "cap": baseline - os2.sCapHeight * scale,
-        "x": baseline - os2.sxHeight * scale,
-        "base": baseline,
-    }
-    return pen.getCommands(), contours, guides, x - tracking - X0
+        xs = [px for c in points for px, _, _ in c]
+        ys = [py for c in points for _, py, _ in c]
+        letters.append({
+            "d": d,
+            "bbox": (min(xs), min(ys), max(xs), max(ys)),
+            "contours": ["M" + c for c in d.split("M") if c],  # one path per contour so each draws at its own pace
+            "points": points,
+        })
+        x += hmtx[n][0] * scale + tracking
+    guides = [baseline - os2.sCapHeight * scale, baseline - os2.sxHeight * scale, baseline]
+    return letters, guides, round(baseline - y_min + MARGIN)
 
 
-def wireframe(contours):
-    """Control polygons plus anchor (square) and handle (circle) markers, like a font editor's outline view."""
-    polys, anchors, handles = [], [], []
-    for pts in contours:
-        polys.append("M" + "L".join(f"{x:.1f} {y:.1f}" for x, y, _ in pts) + "Z")
-        for x, y, on in pts:
-            if on:
-                anchors.append(f"M{x - 2.5:.1f} {y - 2.5:.1f}h5v5h-5z")
-            else:
-                handles.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="2"/>')
-    return "".join(polys), "".join(anchors), "".join(handles)
-
-
-def hero(theme, outline, contours, guides, name_w):
-    c = THEMES[theme]
-    polys, anchors, handles = wireframe(contours)
-    end = X0 + name_w + 28  # where the playhead parks
-    H = round(guides["base"] + 56)
-    guide_lines = "".join(
-        f'<line x1="0" x2="{W}" y1="{y:.1f}" y2="{y:.1f}"/>' for y in guides.values()
+def keyframes(name, stops):
+    """stops: (seconds, declarations, timing function for the segment that starts at this stop)."""
+    body = " ".join(
+        f"{100 * t / LOOP:.2f}% {{ {decl};{f' animation-timing-function: {ease};' if ease else ''} }}"
+        for t, decl, ease in stops
     )
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" role="img" aria-labelledby="title">
-  <title id="title">Solarisx</title>
+    return f"@keyframes {name} {{ {body} }}"
+
+
+def styles():
+    return "\n    ".join([
+        f".guide {{ stroke-dasharray: 1 1; animation: guide {LOOP}s infinite both; }}",
+        f".pt {{ transform-box: fill-box; transform-origin: center; animation: pt {LOOP}s infinite both; }}",
+        f".poly {{ stroke-dasharray: 1 1; animation: poly {LOOP}s infinite both; }}",
+        f".trace {{ stroke-dasharray: 1 1; animation: trace {LOOP}s infinite both; }}",
+        f".pen {{ animation: pen {LOOP}s linear infinite both; }}",
+        f".hatch {{ stroke-dasharray: 1 1; animation: hatch {LOOP}s infinite both; }}",
+        f".solid {{ animation: solid {LOOP}s linear infinite both; }}",
+        keyframes("guide", [
+            (0, "stroke-dashoffset: 1", IN_OUT), (1.0, "stroke-dashoffset: 0", None),
+            (11.6, "stroke-dashoffset: 0", IN_OUT), (12.4, "stroke-dashoffset: -1", None),
+            (LOOP, "stroke-dashoffset: -1", None),
+        ]),
+        keyframes("pt", [
+            (0, "transform: scale(0)", POP), (0.35, "transform: scale(1)", None),
+            # Points leave in the same contour order they arrived, finishing before the solid fill takes over.
+            (4.2, "transform: scale(1)", IN_OUT), (4.6, "transform: scale(0)", None),
+            (LOOP, "transform: scale(0)", None),
+        ]),
+        keyframes("poly", [
+            (0, "stroke-dashoffset: 1; opacity: 1", None),
+            (0.9, "stroke-dashoffset: 1; opacity: 1", IN_OUT), (2.0, "stroke-dashoffset: 0; opacity: 1", None),
+            (4.6, "stroke-dashoffset: 0; opacity: 1", None), (5.2, "stroke-dashoffset: 0; opacity: 0", None),
+            (LOOP, "stroke-dashoffset: 0; opacity: 0", None),
+        ]),
+        keyframes("trace", [
+            (0, "stroke-dashoffset: 1", None),
+            (TRACE_START, "stroke-dashoffset: 1", TRACE), (TRACE_END, "stroke-dashoffset: 0", None),
+            (10.4, "stroke-dashoffset: 0", IN_OUT), (11.4, "stroke-dashoffset: -1", None),
+            (LOOP, "stroke-dashoffset: -1", None),
+        ]),
+        keyframes("pen", [
+            (0, "opacity: 0", None), (TRACE_START - .05, "opacity: 0", None), (TRACE_START + .05, "opacity: 1", None),
+            (TRACE_END, "opacity: 1", None), (TRACE_END + .15, "opacity: 0", None), (LOOP, "opacity: 0", None),
+        ]),
+        # Each hatch line shoots across the letter, then thickens until it overlaps its neighbours.
+        keyframes("hatch", [
+            (0, "stroke-dashoffset: 1; stroke-width: 1px", None),
+            (3.9, "stroke-dashoffset: 1; stroke-width: 1px", IN_OUT),
+            (4.25, "stroke-dashoffset: 0; stroke-width: 1px", None),
+            (4.6, "stroke-dashoffset: 0; stroke-width: 1px", SWELL),
+            (5.1, f"stroke-dashoffset: 0; stroke-width: {HATCH_INK}px", None),
+            (9.4, f"stroke-dashoffset: 0; stroke-width: {HATCH_INK}px", IN_OUT),
+            (9.8, "stroke-dashoffset: 0; stroke-width: 1px", IN_OUT),
+            (10.15, "stroke-dashoffset: -1; stroke-width: 1px", None),
+            (LOOP, "stroke-dashoffset: -1; stroke-width: 1px", None),
+        ]),
+        # The real fill takes over once the last hatch line has merged, and hands back before any of them thin out.
+        keyframes("solid", [
+            (0, "opacity: 0", None), (5.65, "opacity: 0", None), (5.75, "opacity: 1", None),
+            (9.39, "opacity: 1", None), (9.4, "opacity: 0", None), (LOOP, "opacity: 0", None),
+        ]),
+        """@media (prefers-reduced-motion: reduce) {
+      .guide, .solid { animation: none; }
+      .pt, .poly, .trace, .pen, .hatch { display: none; }
+    }""",
+    ])
+
+
+def hatch_lines(bbox):
+    """Diagonal lines (bottom-left to top-right) covering the box, ordered from the top-left corner.
+    The box is padded so the butt ends of fully thickened lines still clear the glyph."""
+    pad = HATCH_INK + 2
+    x0, y0, x1, y1 = bbox[0] - pad, bbox[1] - pad, bbox[2] + pad, bbox[3] + pad
+    step = HATCH_GAP * 2 ** .5  # lines are x + y = C; this step gives HATCH_GAP between them
+    lines, C = [], x0 + y0 + step / 2
+    while C < x1 + y1:
+        xa, xb = max(x0, C - y1), min(x1, C - y0)
+        if xb - xa > 1:
+            lines.append(f"M{xa:.1f} {C - xa:.1f}L{xb:.1f} {C - xb:.1f}")
+        C += step
+    return lines
+
+
+def letter_svg(k, letter, c):
+    delay = k * LETTER_STAGGER
+    late = f' style="animation-delay: {delay:.2f}s"'
+    polys, traces, pens, pts = [], [], [], []
+    for contour in letter["points"]:
+        polys.append(
+            f'<path class="poly" pathLength="1"{late} d="M'
+            + "L".join(f"{x:.1f} {y:.1f}" for x, y, _ in contour) + 'Z"/>'
+        )
+    for i, (x, y, on) in enumerate(p for contour in letter["points"] for p in contour):
+        style = f' style="animation-delay: {0.3 + delay + i * POINT_STAGGER:.3f}s"'
+        if on:
+            pts.append(f'<path class="pt"{style} d="M{x - 2.5:.1f} {y - 2.5:.1f}h5v5h-5z"/>')
+        else:
+            pts.append(f'<circle class="pt"{style} cx="{x:.1f}" cy="{y:.1f}" r="2" fill="{c["muted"]}" stroke="none"/>')
+    for d in letter["contours"]:
+        traces.append(f'<path class="trace" pathLength="1"{late} d="{d}"/>')
+        pens.append(
+            f'<circle class="pen" r="3"{late}><animateMotion path="{d}" begin="{delay:.2f}s" dur="{LOOP}s" '
+            f'repeatCount="indefinite" calcMode="spline" keyPoints="0;0;1;1" '
+            f'keyTimes="0;{TRACE_START / LOOP:.4f};{TRACE_END / LOOP:.4f};1" '
+            f'keySplines="0 0 1 1;{TRACE_SPLINE};0 0 1 1"/></circle>'
+        )
+    hatches = "".join(
+        f'<path class="hatch" pathLength="1" style="animation-delay: {delay + j * HATCH_STAGGER:.3f}s" d="{d}"/>'
+        for j, d in enumerate(hatch_lines(letter["bbox"]))
+    )
+    return f"""
+  <g>
+    <clipPath id="g{k}"><path d="{letter['d']}"/></clipPath>
+    <g fill="none" stroke="{c['muted']}" stroke-width=".75">{''.join(polys)}</g>
+    <g fill="none" stroke="{c['fg']}" clip-path="url(#g{k})">{hatches}</g>
+    <path class="solid"{late} d="{letter['d']}" fill="{c['fg']}"/>
+    <g fill="none" stroke="{c['fg']}" stroke-width="1.25">{''.join(traces)}</g>
+    <g fill="none" stroke="{c['fg']}" stroke-width="1">{''.join(pts)}</g>
+    <g fill="{c['fg']}">{''.join(pens)}</g>
+  </g>"""
+
+
+def hero(theme, letters, guides, h):
+    c = THEMES[theme]
+    guide_paths = "".join(
+        f'<path class="guide" pathLength="1" style="animation-delay: {i * .12:.2f}s" d="M0 {y:.1f}H{W}"/>'
+        for i, y in enumerate(guides)
+    )
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{h}" viewBox="0 0 {W} {h}" role="img" aria-labelledby="title">
+  <title id="title">{NAME}</title>
   <style>
-    .sweep {{ animation: sweep {LOOP} cubic-bezier(.65,0,.35,1) infinite; }}
-    .rewind {{ animation: rewind {LOOP} cubic-bezier(.65,0,.35,1) infinite; }}
-    .solid {{ animation: solid {LOOP} ease-in-out infinite; }}
-    .wire {{ animation: wire {LOOP} ease-in-out infinite; }}
-    .head {{ animation: sweep {LOOP} cubic-bezier(.65,0,.35,1) infinite, head {LOOP} linear infinite; }}
-    @keyframes sweep {{ 0%, 12% {{ transform: translateX(0); }} 52%, 100% {{ transform: translateX({end}px); }} }}
-    @keyframes rewind {{ 0%, 12% {{ transform: translateX(0); }} 52%, 86% {{ transform: translateX({end}px); }} 86.1%, 100% {{ transform: translateX(0); }} }}
-    @keyframes head {{ 0%, 6% {{ opacity: 0; }} 10%, 54% {{ opacity: 1; }} 60%, 100% {{ opacity: 0; }} }}
-    @keyframes solid {{ 0%, 87% {{ opacity: 1; }} 99%, 100% {{ opacity: 0; }} }}
-    @keyframes wire {{ 0%, 52% {{ opacity: 1; }} 53%, 86% {{ opacity: 0; }} 99%, 100% {{ opacity: 1; }} }}
-    @media (prefers-reduced-motion: reduce) {{
-      .sweep, .rewind {{ animation: none; transform: translateX({end}px); }}
-      .solid {{ animation: none; }}
-      .head {{ display: none; }}
-    }}
+    {styles()}
   </style>
-  <defs>
-    <clipPath id="done"><rect class="sweep" x="-{W}" width="{W}" height="{H}"/></clipPath>
-    <clipPath id="todo"><rect class="rewind" x="0" width="{W * 2}" height="{H}"/></clipPath>
-  </defs>
-  <g stroke="{c['guide']}" stroke-width="1">{guide_lines}</g>
-  <g clip-path="url(#todo)">
-   <g class="wire">
-    <path d="{outline}" fill="none" stroke="{c['muted']}" stroke-width="1"/>
-    <path d="{polys}" fill="none" stroke="{c['guide']}" stroke-width="1"/>
-    <path d="{anchors}" fill="none" stroke="{c['fg']}" stroke-width="1"/>
-    <g fill="{c['muted']}">{handles}</g>
-   </g>
-  </g>
-  <g clip-path="url(#done)">
-    <path class="solid" d="{outline}" fill="{c['fg']}"/>
-  </g>
-  <g class="head">
-    <path d="M-6 8h12v8l-6 6l-6-6z" fill="{c['fg']}"/>
-    <line x1="0" x2="0" y1="22" y2="{H - 8}" stroke="{c['fg']}" stroke-width="1"/>
-  </g>
+  <g fill="none" stroke="{c['guide']}" stroke-width="1">{guide_paths}</g>{''.join(letter_svg(k, l, c) for k, l in enumerate(letters))}
 </svg>
 """
 
