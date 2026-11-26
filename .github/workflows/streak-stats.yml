@@ -15,16 +15,23 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Generate streak stats
+      - name: Generate streak stats (dark)
         uses: DenverCoder1/github-readme-streak-stats@main
         with:
-          options: user=${{ github.repository_owner }}&background=15112E&border=2A2450&stroke=2A2450&ring=7C5CFF&fire=FF5FA2&currStreakNum=F5D06F&sideNums=CFC8EA&currStreakLabel=2EE6D6&sideLabels=8A82B0&dates=8A82B0&border_radius=16&disable_animations=true
-          path: profile/streak.svg
+          options: user=${{ github.repository_owner }}&background=00000000&border=30363D&stroke=30363D&ring=E6EDF3&fire=E6EDF3&currStreakNum=E6EDF3&sideNums=E6EDF3&currStreakLabel=E6EDF3&sideLabels=7D8590&dates=7D8590&hide_border=true&disable_animations=true
+          path: profile/streak-dark.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate streak stats (light)
+        uses: DenverCoder1/github-readme-streak-stats@main
+        with:
+          options: user=${{ github.repository_owner }}&background=00000000&border=D0D7DE&stroke=D0D7DE&ring=1F2328&fire=1F2328&currStreakNum=1F2328&sideNums=1F2328&currStreakLabel=1F2328&sideLabels=59636E&dates=59636E&hide_border=true&disable_animations=true
+          path: profile/streak-light.svg
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Commit streak stats
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add profile/streak.svg
+          git add profile/streak-*.svg
           git commit -m "Update streak stats" || exit 0
+          git pull --rebase
           git push

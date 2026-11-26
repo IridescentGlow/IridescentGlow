@@ -1,11 +1,9 @@
-"""Builds the hand-made README SVGs (hero, now panel, section labels, ko-fi button).
+"""Builds the README hero: the name drawn as its own vector construction, rendered by a sweeping playhead.
 
-Text is converted to outlines so it renders identically everywhere GitHub shows the image.
-Needs fonttools and the Syne variable font:
-  curl -L -o Syne.ttf "https://github.com/google/fonts/raw/main/ofl/syne/Syne%5Bwght%5D.ttf"
-  python build_svgs.py Syne.ttf
+Writes profile/hero-dark.svg and profile/hero-light.svg. Needs fonttools and Bricolage Grotesque:
+  curl -L -o Bricolage.ttf "https://github.com/google/fonts/raw/main/ofl/bricolagegrotesque/BricolageGrotesque%5Bopsz,wdth,wght%5D.ttf"
+  python build_svgs.py Bricolage.ttf
 """
-import random
 import sys
 from pathlib import Path
 
@@ -16,205 +14,122 @@ from fontTools.varLib.instancer import instantiateVariableFont
 
 OUT = Path(__file__).resolve().parent.parent
 
-INK = "#0E0B24"
-PANEL = "#15112E"
-BORDER = "#2A2450"
-MIST = "#CFC8EA"
-DIM = "#8A82B0"
-VIOLET, TEAL, GOLD, ROSE = "#7C5CFF", "#2EE6D6", "#F5D06F", "#FF5FA2"
+# GitHub's own foreground / muted / border colors, so the hero sits on the page instead of in a box.
+THEMES = {
+    "dark": {"fg": "#E6EDF3", "muted": "#7D8590", "guide": "#30363D"},
+    "light": {"fg": "#1F2328", "muted": "#8C959F", "guide": "#D0D7DE"},
+}
 
-_fonts = {}
-
-
-def font(weight):
-    if weight not in _fonts:
-        _fonts[weight] = instantiateVariableFont(TTFont(sys.argv[1]), {"wght": weight})
-    return _fonts[weight]
+NAME = "Solarisx"
+W = 1200
+X0, TOP = 20, 64  # TOP leaves room for the playhead's head above the cap height
+TRACKING = -0.025  # in em
+LOOP = "11s"
 
 
-def text_width(text, size, weight, tracking=0):
-    f = font(weight)
-    cmap, hmtx = f.getBestCmap(), f["hmtx"]
-    scale = size / f["head"].unitsPerEm
-    return sum(hmtx[cmap[ord(c)]][0] * scale + tracking for c in text) - tracking
+def load_font():
+    return instantiateVariableFont(TTFont(sys.argv[1]), {"opsz": 96, "wdth": 100, "wght": 700})
 
 
-def text_path(text, size, weight, x, y, tracking=0, anchor="start"):
-    """Returns an SVG path `d` for `text` with its baseline at y."""
-    f = font(weight)
-    cmap, hmtx, glyphs = f.getBestCmap(), f["hmtx"], f.getGlyphSet()
-    scale = size / f["head"].unitsPerEm
-    if anchor == "middle":
-        x -= text_width(text, size, weight, tracking) / 2
+def build(font):
+    """Returns the outline path, on/off-curve points per contour, guide heights and the name's width."""
+    cmap, hmtx, glyf = font.getBestCmap(), font["hmtx"], font["glyf"]
+    glyphs, upem = font.getGlyphSet(), font["head"].unitsPerEm
+
+    os2 = font["OS/2"]
+    # Fit the name to the full width, leaving room on the right for the playhead to park.
+    advance = sum(hmtx[cmap[ord(ch)]][0] / upem + TRACKING for ch in NAME) - TRACKING
+    size = (W - X0 - 56) / advance
+    scale, tracking = size / upem, TRACKING * size
+    baseline = TOP + os2.sCapHeight * scale
     pen = SVGPathPen(glyphs, ntos=lambda v: f"{v:.1f}")
-    for c in text:
-        name = cmap[ord(c)]
-        glyphs[name].draw(TransformPen(pen, (scale, 0, 0, -scale, x, y)))
+    contours = []
+    x = X0
+    for ch in NAME:
+        name = cmap[ord(ch)]
+        glyphs[name].draw(TransformPen(pen, (scale, 0, 0, -scale, x, baseline)))
+        coords, end_pts, flags = glyf[name].getCoordinates(glyf)
+        start = 0
+        for end in end_pts:
+            contours.append([
+                (x + px * scale, baseline - py * scale, bool(flags[i] & 1))
+                for i, (px, py) in enumerate(coords[start:end + 1], start)
+            ])
+            start = end + 1
         x += hmtx[name][0] * scale + tracking
-    return pen.getCommands()
+    guides = {
+        "cap": baseline - os2.sCapHeight * scale,
+        "x": baseline - os2.sxHeight * scale,
+        "base": baseline,
+    }
+    return pen.getCommands(), contours, guides, x - tracking - X0
 
 
-IRIDESCENT_STOPS = f"""
-      <stop offset="0" stop-color="{VIOLET}"/>
-      <stop offset=".32" stop-color="{TEAL}"/>
-      <stop offset=".6" stop-color="{GOLD}"/>
-      <stop offset=".85" stop-color="{ROSE}"/>
-      <stop offset="1" stop-color="{VIOLET}"/>"""
+def wireframe(contours):
+    """Control polygons plus anchor (square) and handle (circle) markers, like a font editor's outline view."""
+    polys, anchors, handles = [], [], []
+    for pts in contours:
+        polys.append("M" + "L".join(f"{x:.1f} {y:.1f}" for x, y, _ in pts) + "Z")
+        for x, y, on in pts:
+            if on:
+                anchors.append(f"M{x - 2.5:.1f} {y - 2.5:.1f}h5v5h-5z")
+            else:
+                handles.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="2"/>')
+    return "".join(polys), "".join(anchors), "".join(handles)
 
-REDUCED_MOTION = "@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }"
 
-
-def hero():
-    w, h = 1200, 420
-    cx, cy = 905, 210
-    rng = random.Random(7)
-    stars = "".join(
-        f'<circle cx="{rng.uniform(0, w):.0f}" cy="{rng.uniform(0, h):.0f}" '
-        f'r="{rng.uniform(.5, 1.4):.1f}" opacity="{rng.uniform(.15, .6):.2f}"/>'
-        for _ in range(70)
+def hero(theme, outline, contours, guides, name_w):
+    c = THEMES[theme]
+    polys, anchors, handles = wireframe(contours)
+    end = X0 + name_w + 28  # where the playhead parks
+    H = round(guides["base"] + 56)
+    guide_lines = "".join(
+        f'<line x1="0" x2="{W}" y1="{y:.1f}" y2="{y:.1f}"/>' for y in guides.values()
     )
-
-    name = "Solarisx"
-    size = 132
-    while text_width(name, size, 800, -2) > 700:
-        size -= 2
-    name_d = text_path(name, size, 800, 70, 235, tracking=-2)
-    handle_d = text_path("@IridescentGlow", 17, 600, 72, 64)
-    line1_d = text_path("Front-end developer and EE student", 28, 600, 72, 296)
-    line2_d = text_path("7+ years of video editing, now learning offensive security", 20, 500, 72, 336)
-
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-labelledby="title">
-  <title id="title">Solarisx: front-end developer and EE student with 7+ years of video editing, now learning offensive security</title>
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" role="img" aria-labelledby="title">
+  <title id="title">Solarisx</title>
   <style>
-    .corona {{ transform-origin: {cx}px {cy}px; animation: spin 48s linear infinite; }}
-    .rim {{ transform-origin: {cx}px {cy}px; animation: spin 70s linear infinite reverse; }}
-    .film {{ animation: drift 16s linear infinite; }}
-    .glint {{ transform-origin: {cx}px {cy}px; animation: glint 6s ease-in-out infinite; }}
-    .rise {{ animation: rise 1.4s cubic-bezier(.2,.7,.2,1) both; }}
-    .rise2 {{ animation: rise 1.4s .25s cubic-bezier(.2,.7,.2,1) both; }}
-    @keyframes spin {{ to {{ transform: rotate(360deg); }} }}
-    @keyframes drift {{ to {{ transform: translateX(-1200px); }} }}
-    @keyframes glint {{ 0%, 100% {{ opacity: .55; }} 50% {{ opacity: 1; }} }}
-    @keyframes rise {{ from {{ opacity: 0; transform: translateY(14px); }} to {{ opacity: 1; transform: none; }} }}
-    {REDUCED_MOTION}
+    .sweep {{ animation: sweep {LOOP} cubic-bezier(.65,0,.35,1) infinite; }}
+    .rewind {{ animation: rewind {LOOP} cubic-bezier(.65,0,.35,1) infinite; }}
+    .solid {{ animation: solid {LOOP} ease-in-out infinite; }}
+    .wire {{ animation: wire {LOOP} ease-in-out infinite; }}
+    .head {{ animation: sweep {LOOP} cubic-bezier(.65,0,.35,1) infinite, head {LOOP} linear infinite; }}
+    @keyframes sweep {{ 0%, 12% {{ transform: translateX(0); }} 52%, 100% {{ transform: translateX({end}px); }} }}
+    @keyframes rewind {{ 0%, 12% {{ transform: translateX(0); }} 52%, 86% {{ transform: translateX({end}px); }} 86.1%, 100% {{ transform: translateX(0); }} }}
+    @keyframes head {{ 0%, 6% {{ opacity: 0; }} 10%, 54% {{ opacity: 1; }} 60%, 100% {{ opacity: 0; }} }}
+    @keyframes solid {{ 0%, 87% {{ opacity: 1; }} 99%, 100% {{ opacity: 0; }} }}
+    @keyframes wire {{ 0%, 52% {{ opacity: 1; }} 53%, 86% {{ opacity: 0; }} 99%, 100% {{ opacity: 1; }} }}
+    @media (prefers-reduced-motion: reduce) {{
+      .sweep, .rewind {{ animation: none; transform: translateX({end}px); }}
+      .solid {{ animation: none; }}
+      .head {{ display: none; }}
+    }}
   </style>
   <defs>
-    <clipPath id="frame"><rect width="{w}" height="{h}" rx="22"/></clipPath>
-    <linearGradient id="film" x1="0" y1="0" x2="600" y2="0" gradientUnits="userSpaceOnUse" spreadMethod="reflect">{IRIDESCENT_STOPS}
-    </linearGradient>
-    <linearGradient id="ringA" x1="0" y1="0" x2="1" y2="1">{IRIDESCENT_STOPS}
-    </linearGradient>
-    <linearGradient id="ringB" x1="1" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="{GOLD}"/>
-      <stop offset=".5" stop-color="{VIOLET}" stop-opacity=".2"/>
-      <stop offset="1" stop-color="{TEAL}"/>
-    </linearGradient>
-    <radialGradient id="halo">
-      <stop offset=".45" stop-color="{VIOLET}" stop-opacity=".38"/>
-      <stop offset="1" stop-color="{VIOLET}" stop-opacity="0"/>
-    </radialGradient>
-    <filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="16"/></filter>
-    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3"/></filter>
-    <clipPath id="name"><path d="{name_d}"/></clipPath>
+    <clipPath id="done"><rect class="sweep" x="-{W}" width="{W}" height="{H}"/></clipPath>
+    <clipPath id="todo"><rect class="rewind" x="0" width="{W * 2}" height="{H}"/></clipPath>
   </defs>
-  <g clip-path="url(#frame)">
-    <rect width="{w}" height="{h}" fill="{INK}"/>
-    <g fill="{MIST}">{stars}</g>
-    <circle cx="{cx}" cy="{cy}" r="330" fill="url(#halo)"/>
-    <g class="corona">
-      <circle cx="{cx}" cy="{cy}" r="146" fill="none" stroke="url(#ringA)" stroke-width="34" filter="url(#blur)"/>
-      <circle cx="{cx}" cy="{cy}" r="136" fill="none" stroke="url(#ringA)" stroke-width="7" filter="url(#soft)"/>
-    </g>
-    <g class="rim">
-      <circle cx="{cx}" cy="{cy}" r="130" fill="none" stroke="url(#ringB)" stroke-width="2.5"/>
-    </g>
-    <circle cx="{cx}" cy="{cy}" r="128" fill="#08061A"/>
-    <g class="glint">
-      <circle cx="{cx + 92}" cy="{cy - 90}" r="10" fill="#FFF6DA" filter="url(#soft)"/>
-      <circle cx="{cx + 92}" cy="{cy - 90}" r="3.5" fill="#FFFFFF"/>
-    </g>
-    <path class="rise" d="{handle_d}" fill="{DIM}"/>
-    <g class="rise" clip-path="url(#name)">
-      <rect class="film" width="2400" height="{h}" fill="url(#film)"/>
-    </g>
-    <g class="rise2">
-      <path d="{line1_d}" fill="{MIST}"/>
-      <path d="{line2_d}" fill="{DIM}"/>
-    </g>
+  <g stroke="{c['guide']}" stroke-width="1">{guide_lines}</g>
+  <g clip-path="url(#todo)">
+   <g class="wire">
+    <path d="{outline}" fill="none" stroke="{c['muted']}" stroke-width="1"/>
+    <path d="{polys}" fill="none" stroke="{c['guide']}" stroke-width="1"/>
+    <path d="{anchors}" fill="none" stroke="{c['fg']}" stroke-width="1"/>
+    <g fill="{c['muted']}">{handles}</g>
+   </g>
   </g>
-  <rect x=".5" y=".5" width="{w - 1}" height="{h - 1}" rx="21.5" fill="none" stroke="{BORDER}"/>
-</svg>
-"""
-
-
-def now_panel():
-    items = [
-        "Learning offensive security, working through VulnHub boxes",
-        "Building a small home lab",
-        "Building a premium developer portfolio with Next.js and Tailwind",
-    ]
-    w, top, step = 1200, 112, 52
-    h = top + step * (len(items) - 1) + 52
-    rows = []
-    for i, item in enumerate(items):
-        y = top + i * step
-        rows.append(
-            f'<circle cx="90" cy="{y - 7}" r="8" fill="none" stroke="url(#iri)" stroke-width="3"/>'
-            f'<path d="{text_path(item, 22, 500, 120, y)}" fill="{MIST}"/>'
-        )
-    title_d = text_path("Right now", 26, 700, 72, 62)
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-labelledby="title">
-  <title id="title">Right now: {"; ".join(items)}</title>
-  <defs>
-    <linearGradient id="iri" x1="0" y1="0" x2="1" y2="1">{IRIDESCENT_STOPS}
-    </linearGradient>
-  </defs>
-  <rect x=".5" y=".5" width="{w - 1}" height="{h - 1}" rx="21.5" fill="{PANEL}" stroke="{BORDER}"/>
-  <path d="{title_d}" fill="{GOLD}"/>
-  {"".join(rows)}
-</svg>
-"""
-
-
-def label(text, name):
-    """Writes label-<name>.svg (gold, for dark mode) and label-<name>-light.svg (violet, for light mode)."""
-    size, weight = 26, 700
-    w = round(text_width(text, size, weight)) + 4
-    d = text_path(text, size, weight, 2, 30)
-    for suffix, color in (("", GOLD), ("-light", "#4B2FB8")):
-        Path(OUT, f"label-{name}{suffix}.svg").write_text(
-            f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="40" viewBox="0 0 {w} 40" role="img" aria-label="{text}">'
-            f'<path d="{d}" fill="{color}"/></svg>\n'
-        )
-
-
-def kofi():
-    w, h = 360, 64
-    d = text_path("Buy me a coffee on Ko-fi", 20, 600, w / 2, 39, anchor="middle")
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-label="Buy me a coffee on Ko-fi">
-  <style>
-    .film {{ animation: drift 10s linear infinite; }}
-    @keyframes drift {{ to {{ transform: translateX(-720px); }} }}
-    {REDUCED_MOTION}
-  </style>
-  <defs>
-    <linearGradient id="film" x1="0" y1="0" x2="360" y2="0" gradientUnits="userSpaceOnUse" spreadMethod="reflect">{IRIDESCENT_STOPS}
-    </linearGradient>
-    <clipPath id="pill"><rect x="1" y="1" width="{w - 2}" height="{h - 2}" rx="{(h - 2) / 2}"/></clipPath>
-  </defs>
-  <g clip-path="url(#pill)">
-    <rect class="film" width="{w * 4}" height="{h}" fill="url(#film)"/>
-    <rect x="3" y="3" width="{w - 6}" height="{h - 6}" rx="{(h - 6) / 2}" fill="{PANEL}"/>
+  <g clip-path="url(#done)">
+    <path class="solid" d="{outline}" fill="{c['fg']}"/>
   </g>
-  <path d="{d}" fill="{MIST}"/>
+  <g class="head">
+    <path d="M-6 8h12v8l-6 6l-6-6z" fill="{c['fg']}"/>
+    <line x1="0" x2="0" y1="22" y2="{H - 8}" stroke="{c['fg']}" stroke-width="1"/>
+  </g>
 </svg>
 """
 
 
 if __name__ == "__main__":
-    Path(OUT, "hero.svg").write_text(hero())
-    Path(OUT, "now.svg").write_text(now_panel())
-    Path(OUT, "kofi.svg").write_text(kofi())
-    label("Tools I use", "tools")
-    label("Activity", "activity")
-    label("Featured work", "featured")
+    parts = build(load_font())
+    for theme in THEMES:
+        Path(OUT, f"hero-{theme}.svg").write_text(hero(theme, *parts))
