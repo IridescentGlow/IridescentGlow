@@ -6,7 +6,7 @@
   <img src="./profile/hero-light.svg" width="100%" alt="SolarisX">
 </picture>
 
-<p align="center">Front-end developer and electrical engineering student. I've been editing video for 7+ years.</p>
+<p align="center">Software developer and electrical engineering student. I've been editing videos for 7+ years.</p>
 
 <p align="center">
   <a href="https://www.linkedin.com/in/edible-dank-84932233b/"><img src="./profile/icons/social-linkedin.svg" width="36" height="36" alt="LinkedIn" title="LinkedIn" /></a> &emsp;&ensp; <a href="https://t.me/Lumianara"><img src="./profile/icons/social-telegram.svg" width="36" height="36" alt="Telegram" title="Telegram" /></a> &emsp;&ensp; <a href="https://www.instagram.com/phazotron_"><img src="./profile/icons/social-instagram.svg" width="36" height="36" alt="Instagram" title="Instagram" /></a> &emsp;&ensp; <a href="mailto:contactphazotron@gmail.com"><img src="./profile/icons/social-gmail.svg" width="36" height="36" alt="Email" title="Email" /></a> &emsp;&ensp; <a href="https://discord.com/users/1529829388353409064"><img src="./profile/icons/social-discord.svg" width="36" height="36" alt="Discord" title="Discord" /></a> &emsp;&ensp; <a href="https://ko-fi.com/edibledank"><img src="./profile/icons/social-kofi.svg" width="36" height="36" alt="Ko-fi" title="Ko-fi" /></a>
